@@ -2,6 +2,7 @@ import express from "express";
 import User from "../Models/UserModel.js";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv'
+import authtoken from "../middleware/authtoken.js";
 dotenv.config()
 const userRouter = express.Router();
 const jwtkey = process.env.JWTKEY;
@@ -42,4 +43,13 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
+userRouter.get('/getuser', authtoken ,async(req,res)=>{
+  try {
+    const username = req.username
+  
+    return res.send(username)
+  } catch (error) {
+    res.status(500).send("Internal server error");
+  }
+})
 export default userRouter
