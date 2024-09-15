@@ -15,7 +15,7 @@ app.use('/',userRouter)
 const PORT = process.env.PORT || 5000
 mongoose.connect(process.env.MONGOURL).then(()=> console.log("database connected")).catch((err)=> console.log(err));
 
-app.use('/',Todoroutes)
+app.use('/todo',Todoroutes)
 app.listen(PORT,()=>{
     console.log(`server is listening http://localhost:${PORT}`);
     

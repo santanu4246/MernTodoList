@@ -1,24 +1,40 @@
 import TodoModel from "../Models/TodoModel.js";
-
+import User from "../Models/UserModel.js";
 const getTodo = async (req, res) => {
-  const Todo = await TodoModel.find();
-  res.send(Todo);
+  const { id } = req.params;
+ try {
+    const todos = await TodoModel.find({ user: id });
+    res.send(todos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
 };
+
 
 const saveTodo = async (req, res) => {
-  const { text } = await req.body;
+  try {
+    const { text, user } = req.body;
 
-  TodoModel.create({ text })
-    .then((data) => {
-      console.log("added succesfully....");
-      console.log(data);
-      res.send(data);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.send({ msg: "error" });
-    });
+    const newTodo = new TodoModel({ text, user });
+    const savedTodo = await newTodo.save();
+
+
+    await User.findByIdAndUpdate(
+      user,
+      { $push: { task: savedTodo._id } },
+      { new: true } 
+    );
+
+    console.log("Added successfully....");
+    console.log(savedTodo);
+    res.send(savedTodo);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ msg: "Error saving todo" });
+  }
 };
+;
 
 const updateTodo = async (req,res)=>{
     const {_id, text} = req.body

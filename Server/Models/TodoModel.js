@@ -8,7 +8,7 @@ const TodoSchema = new Schema(
     },
     user: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: "user",
       },
     ],

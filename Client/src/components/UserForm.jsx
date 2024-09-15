@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { login, signup } from "../../Utils/HandelApi";
-
+import { useNavigate } from 'react-router-dom';
 const UserForm = () => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true); // Toggle between Login/Signup
   const [formData, setFormData] = useState({
     username: "",
@@ -18,11 +19,11 @@ const UserForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (isLogin) {
       console.log("Login:", formData);
-      login(formData);
+      await login(formData,navigate);
     } else {
       if (formData.password !== formData.confirmPassword) {
         alert("Passwords do not match!");
