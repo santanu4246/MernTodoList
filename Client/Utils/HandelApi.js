@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseUrl = "http://localhost:5000"
+const baseUrl = "https://merntodolist-sshj.onrender.com"
 
 const getAllTodo = (setTodos) =>{
     axios.get(baseUrl).then(({data})=>{
