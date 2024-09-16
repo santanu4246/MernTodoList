@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-const baseUrl = " http://localhost:5000";
+const baseUrl = " https://merntodolist-sshj.onrender.com";
 
 const getAllTodo = (setTodos) => {
   let id = localStorage.getItem("userId");
