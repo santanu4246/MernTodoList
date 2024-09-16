@@ -9,12 +9,11 @@ const jwtkey = process.env.JWTKEY;
 //sign in
 userRouter.post("/regiser", async (req, res) => {
   try {
-    const { email, username, password, todoid } = req.body;
-    console.log("todoid", todoid);
+    const { email, username, password } = req.body;
     
-    const user = new User({ email, username, password, task: todoid });
+    const user = new User({ email, username, password });
     const response = await user.save();
-    res.status(200).json({ msg: "data saved", response });
+    res.status(200).json({ msg: "Sign up successfull", response });
   } catch (error) {
     res.status(500).send("Internal server error");
   }
@@ -36,14 +35,23 @@ userRouter.post("/login", async (req, res) => {
         });
         res.status(200).json({ msg: "login successfull", user });
       } else {
-        res.status(404).json({ msg: "wrong password" });
+        res.status(200).json({ msg: "wrong password" });
       }
     } else {
-      res.status(404).json({ msg: "user not found" });
+      res.status(200).json({ msg: "user not found" });
     }
   } catch (error) {
     res.status(500).send("Internal server error");
   }
+});
+
+//logout
+userRouter.post("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "strict",
+  });
+  res.status(200).json({ msg: "Logout successful" });
 });
 
 userRouter.get("/getuser", authtoken, async (req, res) => {

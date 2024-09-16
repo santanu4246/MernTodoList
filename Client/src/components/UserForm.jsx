@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { login, signup } from "../../Utils/HandelApi";
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 const UserForm = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true); // Toggle between Login/Signup
@@ -26,7 +27,7 @@ const UserForm = () => {
       await login(formData,navigate);
     } else {
       if (formData.password !== formData.confirmPassword) {
-        alert("Passwords do not match!");
+        toast.error("Passwords do not match");
         return;
       }
       signup(formData);

@@ -26,7 +26,7 @@ const saveTodo = async (req, res) => {
       { new: true } 
     );
 
-    console.log("Added successfully....");
+    res.status(200).json({ msg: "Todo saved successfully", savedTodo });
     console.log(savedTodo);
     res.send(savedTodo);
   } catch (err) {
@@ -45,8 +45,8 @@ const updateTodo = async (req,res)=>{
 const deleteTodo = async (req,res)=>{
     const {_id} = req.body
     TodoModel.findByIdAndDelete(_id)
-    .then(()=> res.send("deleted sucessfuly..."))
-    .catch((err)=> console.log(err))
+    .then(()=> res.status(200).json({ msg: "Todo deleted successfully"}))
+    .catch((err)=> res.send(err))
 }
 
 export { getTodo, saveTodo,updateTodo, deleteTodo};

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { addTodo, deleteTodo, getAllTodo } from "../../Utils/HandelApi";
+import { addTodo, deleteTodo, getAllTodo, logout } from "../../Utils/HandelApi";
+import { useNavigate } from 'react-router-dom';
 const Todo = () => {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
@@ -13,13 +14,18 @@ const Todo = () => {
   useEffect(() => {
     getAllTodo(setTodos);
   });
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+        <div className="flex justify-between">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
           Todo App
         </h1>
-
+        <div className="">
+          <button className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition" onClick={() => logout(navigate)}>Logout</button>
+        </div>
+        </div>
         {/* Input section */}
         <div className="flex mb-4">
           <input
