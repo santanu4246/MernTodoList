@@ -19,19 +19,15 @@ const saveTodo = async (req, res) => {
     const newTodo = new TodoModel({ text, user });
     const savedTodo = await newTodo.save();
 
-
+    res.status(200).json({ msg: "Todo saved successfully"});
     await User.findByIdAndUpdate(
       user,
       { $push: { task: savedTodo._id } },
       { new: true } 
     );
-
-    res.status(200).json({ msg: "Todo saved successfully", savedTodo });
-    console.log(savedTodo);
-    res.send(savedTodo);
   } catch (err) {
     console.error(err);
-    res.status(500).send({ msg: "Error saving todo" });
+    res.status(500).json({ msg: "Error saving todo" });
   }
 };
 ;
